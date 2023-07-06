@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.DeviceCapabilitiesDetector" parent="@style/Theme.Leanback" />
+</resources>
