@@ -34,10 +34,10 @@ public class MainActivity extends Activity {
             MediaCodecList codecList = new MediaCodecList(MediaCodecList.REGULAR_CODECS);
             for (MediaCodecInfo codecInfo : codecList.getCodecInfos()) {
                 for (String supportedType : codecInfo.getSupportedTypes()) {
-                    MediaCodecInfo.CodecCapabilities capabilities = codecInfo.getCapabilitiesForType(supportedType);
-                    for (CodecProfileLevel level : capabilities.profileLevels) {
-                        if (acceptedProfiles.contains(level.profile)) {
-                            Log.d(TAG, "Returning true for codec=" + codecInfo.getName() + " level=" + level.profile);
+                    MediaCodecInfo.CodecCapabilities codec = codecInfo.getCapabilitiesForType(supportedType);
+                    for (CodecProfileLevel codecProfileLevel : codec.profileLevels) {
+                        if (acceptedProfiles.contains(codecProfileLevel.profile)) {
+                            Log.d(TAG, "Returning true for codec=" + codecInfo.getName() + " level=" + codecProfileLevel.profile);
                             found = true;
                         }
                     }
@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
             return found;
         }
         return anyCodecCapabilitiesMatch(codec -> Arrays.stream(codec.profileLevels)
-                .map(level -> level.profile)
+                .map(codecProfileLevel -> codecProfileLevel.profile)
                 .anyMatch(acceptedProfiles::contains));
     }
 
